@@ -1,3 +1,4 @@
+
 from fastai import *
 from fastai.vision import *
 from fastai.metrics import error_rate
@@ -6,3 +7,20 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+from keras.preprocessing.image import ImageDataGenerator
+import keras
+
+
+yogadataset = "./yogadataset"
+
+classes = sorted(os.listdir(yogadataset))
+print(len(classes))
+print(classes)
+
+img_data_gen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
+
+# Load Data
+train_ds = img_data_gen.flow_from_directory(yogadataset, target_size=(256,256), class_mode='binary', subset='training')
+valid_ds = img_data_gen.flow_from_directory(yogadataset, target_size=(256,256), class_mode='binary', subset='validation')
+
